@@ -3,11 +3,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Dapper;
 using Microsoft.Data.SqlClient;
+using Dapper;
 
-namespace SampleApp.CyberCore
+namespace CyberCore
 {
+    public interface ISqlClient
+    {
+        Task<IEnumerable<T>> QueryAsync<T>(string command, object parameters = null);
+
+        Task<T> QueryFirstAsync<T>(string command, object parameters = null);
+
+        Task<T> QueryFirstOrDefaultAsync<T>(string command, object parameters = null);
+
+        Task<T> QuerySingleAsync<T>(string command, object parameters = null);
+
+        Task<T> QuerySingleOrDefaultAsync<T>(string command, object parameters = null);
+
+        Task<int> ExecuteNonQueryAsync(string command, object parameters = null);
+    }
+
     public class SqlClient : ISqlClient
     {
         public SqlClient(string connectionString, int commandTimeout = 0)
