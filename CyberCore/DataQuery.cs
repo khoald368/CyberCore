@@ -13,6 +13,9 @@ namespace CyberCore
 
     public class DataQuery : IDataQuery
     {
+        public DataQuery(string connectionString)
+        {
 
+        }
     }
 }
