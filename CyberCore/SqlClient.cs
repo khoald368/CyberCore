@@ -10,76 +10,68 @@ namespace CyberCore
 {
     public interface ISqlClient
     {
-        Task<IEnumerable<T>> QueryAsync<T>(string command, object parameters = null);
+        Task<IEnumerable<T>> QueryAsync<T>(string connection, string command, object parameters = null);
 
-        Task<T> QueryFirstAsync<T>(string command, object parameters = null);
+        Task<T> QueryFirstAsync<T>(string connection, string command, object parameters = null);
 
-        Task<T> QueryFirstOrDefaultAsync<T>(string command, object parameters = null);
+        Task<T> QueryFirstOrDefaultAsync<T>(string connection, string command, object parameters = null);
 
-        Task<T> QuerySingleAsync<T>(string command, object parameters = null);
+        Task<T> QuerySingleAsync<T>(string connection, string command, object parameters = null);
 
-        Task<T> QuerySingleOrDefaultAsync<T>(string command, object parameters = null);
+        Task<T> QuerySingleOrDefaultAsync<T>(string connection, string command, object parameters = null);
 
-        Task<int> ExecuteNonQueryAsync(string command, object parameters = null);
+        Task<int> ExecuteNonQueryAsync(string connection, string command, object parameters = null);
     }
 
     public class SqlClient : ISqlClient
     {
-        public SqlClient(string connectionString, int commandTimeout = 0)
+        public async Task<IEnumerable<T>> QueryAsync<T>(string connection, string command, object parameters = null)
         {
-            ConnectionString = connectionString;
-            if (commandTimeout != 0) CommandTimeout = commandTimeout;
-        }
-
-        public async Task<IEnumerable<T>> QueryAsync<T>(string command, object parameters = null)
-        {
-            using (SqlConnection conn = new SqlConnection(ConnectionString))
+            using (SqlConnection conn = new SqlConnection(connection))
             {
                 return await conn.QueryAsync<T>(sql: command, param: parameters, commandTimeout: CommandTimeout);
             }
         }
 
-        public async Task<T> QueryFirstAsync<T>(string command, object parameters = null)
+        public async Task<T> QueryFirstAsync<T>(string connection, string command, object parameters = null)
         {
-            using (SqlConnection conn = new SqlConnection(ConnectionString))
+            using (SqlConnection conn = new SqlConnection(connection))
             {
                 return await conn.QueryFirstAsync<T>(sql: command, param: parameters, commandTimeout: CommandTimeout);
             }
         }
 
-        public async Task<T> QueryFirstOrDefaultAsync<T>(string command, object parameters = null)
+        public async Task<T> QueryFirstOrDefaultAsync<T>(string connection, string command, object parameters = null)
         {
-            using (SqlConnection conn = new SqlConnection(ConnectionString))
+            using (SqlConnection conn = new SqlConnection(connection))
             {
                 return await conn.QueryFirstOrDefaultAsync<T>(sql: command, param: parameters, commandTimeout: CommandTimeout);
             }
         }
 
-        public async Task<T> QuerySingleAsync<T>(string command, object parameters = null)
+        public async Task<T> QuerySingleAsync<T>(string connection, string command, object parameters = null)
         {
-            using (SqlConnection conn = new SqlConnection(ConnectionString))
+            using (SqlConnection conn = new SqlConnection(connection))
             {
                 return await conn.QuerySingleAsync<T>(sql: command, param: parameters, commandTimeout: CommandTimeout);
             }
         }
 
-        public async Task<T> QuerySingleOrDefaultAsync<T>(string command, object parameters = null)
+        public async Task<T> QuerySingleOrDefaultAsync<T>(string connection, string command, object parameters = null)
         {
-            using (SqlConnection conn = new SqlConnection(ConnectionString))
+            using (SqlConnection conn = new SqlConnection(connection))
             {
                 return await conn.QuerySingleOrDefaultAsync<T>(sql: command, param: parameters, commandTimeout: CommandTimeout);
             }
         }
 
-        public async Task<int> ExecuteNonQueryAsync(string command, object parameters = null)
+        public async Task<int> ExecuteNonQueryAsync(string connection, string command, object parameters = null)
         {
-            using (SqlConnection conn = new SqlConnection(ConnectionString))
+            using (SqlConnection conn = new SqlConnection(connection))
             {
                 return await conn.ExecuteAsync(sql: command, param: parameters, commandTimeout: CommandTimeout);
             }
         }
-
-        private string ConnectionString { get; set; }
 
         private int CommandTimeout { get; set; } = 120;
     }

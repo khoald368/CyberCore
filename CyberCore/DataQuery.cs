@@ -13,9 +13,26 @@ namespace CyberCore
 
     public class DataQuery : IDataQuery
     {
-        public DataQuery(string connectionString)
+        public void Initialize(string connectionString)
         {
-
+            ConnectionString = connectionString;
         }
+
+        public async Task<IEnumerable<T>> GetListAsync<T>(QueryPaging paging, QueryFilter filter) where T : class
+        {
+            return null;
+        }
+
+        private string ConnectionString { get; set; }
+    }
+
+    public class QueryPaging
+    {
+
+    }
+
+    public class QueryFilter
+    {
+
     }
 }
