@@ -15,4 +15,9 @@
     <ProjectReference Include="..\CyberCore\CyberCore.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Entities\" />
+    <Folder Include="Filters\" />
+  </ItemGroup>
+
 </Project>

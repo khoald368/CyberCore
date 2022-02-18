@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Data.SqlClient;
 using Dapper;
 
-namespace CyberCore
+namespace CyberCore.DataMining
 {
     public interface ISqlClient
     {

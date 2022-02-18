@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CyberCore
+namespace CyberCore.DataMining
 {
     public interface IDataQuery
     {
-
+        Task<IEnumerable<T>> GetAsync<T>(Paging paging, object filter) where T : class;
     }
 
     public class DataQuery : IDataQuery
@@ -18,21 +18,11 @@ namespace CyberCore
             ConnectionString = connectionString;
         }
 
-        public async Task<IEnumerable<T>> GetListAsync<T>(QueryPaging paging, QueryFilter filter) where T : class
+        public async Task<IEnumerable<T>> GetAsync<T>(Paging paging, object filter) where T : class
         {
             return null;
         }
 
         private string ConnectionString { get; set; }
-    }
-
-    public class QueryPaging
-    {
-
-    }
-
-    public class QueryFilter
-    {
-
     }
 }
